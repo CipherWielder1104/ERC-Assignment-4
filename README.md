@@ -28,7 +28,7 @@ You are tasked with developing a virtual air hockey game using computer vision a
    - Display a virtual air hockey table on the screen.
    - Implement a puck that moves around the screen with an initial velocity.
    - Create a paddle controlled by the player's hand.
-   - Generate multiple target positions randomly on the screen.
+   - Generate multiple target positions randomly on the screen.The target image has been provided.
 
 3. **Game Logic:**
    - The puck should bounce off the walls of the screen.
