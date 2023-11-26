@@ -22,20 +22,20 @@ paddle_position = [width // 3, height // 3]
 puck_position = [width // 2, height // 2]  # 3
 
 # Initial velocity
-initial_puck_velocity = [15, 15]
+initial_puck_velocity = [20, 20]
 puck_velocity = initial_puck_velocity.copy()
 
 # Load target image, convert it to RGB and resize it to 30,30
 target_image = cv2.cvtColor(cv2.imread("target.png", -1), cv2.COLOR_BGRA2BGR)
 target_image = cv2.resize(target_image, (50, 50))  # 4
 
-# Initialize 20 target positions randomly
+# Initialize 30 target positions randomly
 target_positions = [
     [
         random.randint(0, width - target_image.shape[1]),  # x-coordinate
         random.randint(0, height - target_image.shape[0]),  # y-coordinate
     ]
-    for _ in range(20)
+    for _ in range(30)
 ]  # 5
 
 # Initialize score
@@ -88,6 +88,12 @@ while True:
     if puck_position[1] <= 0 or puck_position[1] >= height:
         puck_velocity[1] *= -1  # 16
 
+    # Check if velocity becomes zero
+    if puck_velocity[0] == 0:
+        puck_velocity[0] = 10
+    if puck_velocity[1] == 0:
+        puck_velocity[1] = 10  # 17
+
     # Check for collisions with the paddle
     if is_within_acceptance(puck_position, paddle_position):
         puck_velocity[0] *= -1
@@ -99,6 +105,7 @@ while True:
             score += 1
             puck_velocity[0] += 10
             puck_velocity[1] += 10  # 18
+            print(puck_velocity)
             target_positions.remove(target_position)
 
     # Draw paddle, puck, and targets on the frame and overlay target image on frame
@@ -116,11 +123,11 @@ while True:
     cv2.putText(
         frame,
         "Score: " + str(score),
-        (100, 100),  # Move text to the right
+        (850, 100),  # Move text to the right
         cv2.FONT_HERSHEY_SIMPLEX,
         2,  # Increase font scale
         (0, 0, 0),  # Set color to white
-        2,
+        5,
         cv2.LINE_AA,
     )  # 20
 
@@ -128,11 +135,11 @@ while True:
     cv2.putText(
         frame,
         "Time: " + str(int(remaining_time)),
-        (100, 150),
+        (850, 150),
         cv2.FONT_HERSHEY_SIMPLEX,
         2,
         (0, 0, 0),
-        2,
+        5,
         cv2.LINE_AA,
     )  # 21
 
