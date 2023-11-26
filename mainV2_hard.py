@@ -33,9 +33,8 @@ def c_cords(text,font,font_scale,font_thickness): # defining centre cords
    cen_y = (frame.shape[0] + text_size[1]) // 2
    return (cen_x, cen_y)
 
-# Draw the text
 
-def draw_puck(frame, puck_p,puck_radius): #puck draw 
+def draw_puck(frame, puck_p,puck_radius): #Darw 
     center = (int(puck_p[0]), int(puck_p[1]))
     cv2.circle(frame, center, puck_radius,(255,0,0), cv2.FILLED)
 
@@ -59,7 +58,7 @@ initial_puck_velocity = [10, 10]
 puck_velocity = initial_puck_velocity.copy()
 
 # Load target image and resize it to 30,30
-target=r"C:\Users\Omega\Desktop\ERC_CV\target.png" 
+target=r"Target.png Location" 
 point_img= cv2.imread(target , cv2.IMREAD_UNCHANGED)
 target_i=cv2.resize(point_img , (30,30))
 
@@ -74,13 +73,11 @@ no_of_hits = 0
 # Initialize timer variables
 start_time = time.time()
 game_duration = 30  # 1/2 minute in second
-
     
+#Below 3 lines are there to make it easier to choose the game mode .
 display_screen = True
 game_screen_hard = False
 game_screen_normal = False 
-
-
 
 while True:
     
@@ -120,8 +117,6 @@ while True:
                 else:
                         return False
            
-            
-
         if pressedKey == ord('h'):  #type h for harder mode
             display_screen = False
             game_screen_hard = True
@@ -143,9 +138,6 @@ while True:
 
         if  pressedKey == ord('q'): # Exit the game when 'q' is pressed
             break
-
-        
-
 
     elif game_screen_normal :
 
@@ -199,12 +191,6 @@ while True:
             if results.multi_hand_landmarks and results.multi_hand_landmarks[0].landmark:
                 paddle_center = (paddle_position[0], paddle_position[1])
                 cv2.circle(frame, paddle_center , 20 ,(0,255,0), cv2.FILLED)
-
-            #Tried to draw a rectangular paddle . But faced some issue .
-            '''paddle_width, paddle_height = 70, 20  # paddle size as 70 * 30  
-            paddle_top_left = (int(paddle_position[0] - paddle_width / 2), int(paddle_position[1] - paddle_height / 2))
-            paddle_bottom_right = (int(paddle_position[0] + paddle_width / 2), int(paddle_position[1] + paddle_height / 2))
-            cv2.rectangle(frame, paddle_top_left, paddle_bottom_right, (0, 255, 0), cv2.FILLED)'''
             
             #target frame and target positioning 
             for target_position in target_positions :
@@ -256,8 +242,6 @@ while True:
             game_screen_hard = False
             game_screen_normal = False 
             break
-        
-
 
     elif game_screen_hard:
         if results.multi_hand_landmarks:
@@ -323,7 +307,6 @@ while True:
                                         beta * target_roi[:, :, c])
 
             cv2.putText(frame, f"Score: {score}", (25 , 40 ), cv2.FONT_HERSHEY_PLAIN, 1,(0,0,255), 1) # Display the player's score on the frame
-
             cv2.putText(frame, f"Time Remaining : {rem_time_min} minutes {rem_time_sec} seconds ", (25 , 25 ), cv2.FONT_HERSHEY_PLAIN, 1,(0,0,255), 1)  # Display the remaining time on the frame
             
             if pressedKey == ord('r'):  #Press R to Reload 
