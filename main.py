@@ -6,19 +6,26 @@ import time
 
 # Initialize webcam
 #1
-
+cap=cv2.VideoCapture(0)
+if not cap.isOpened():
+    raise IOError("Cannot open webcam")
 # Initialize hand tracking
 #2
-
+mp_hands = mp.solutions.hands
+hands = mp_hands.Hands()
 # Initialize paddle and puck positions
 #3
-
+PADDLE_WIDTH, PADDLE_HEIGHT = 100, 20
+PUCK_SIZE = 20
 # Initial velocity
 initial_puck_velocity = [10, 10] 
 puck_velocity = initial_puck_velocity.copy()
 
 # Load target image and resize it to 30,30
 #4
+TARGET_IMAGE = cv2.imread("target.png")
+TARGET_HEIGHT, TARGET_WIDTH = TARGET_IMAGE.shape[:2]
+TARGET_RADIUS = 30
 
 # Initialize 5 target positions randomly(remember assignment 2!!)
 #5
